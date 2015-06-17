@@ -8,8 +8,9 @@ namespace UnityStandardAssets._2D
     public class Platformer2DUserControl : MonoBehaviour
     {
         private PlatformerCharacter2D m_Character;
-        private bool m_Jump;
-
+		private bool m_Jump;
+		private bool c_Turn;
+		private int turn = 1;
 
         private void Awake()
         {
@@ -19,21 +20,34 @@ namespace UnityStandardAssets._2D
 
         private void Update()
         {
-            if (!m_Jump)
-            {
-                // Read the jump input in Update so button presses aren't missed.
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-            }
-        }
+
+			if (!m_Jump) {
+				// Read the jump input in Update so button presses aren't missed.
+				m_Jump = CrossPlatformInputManager.GetButtonDown ("Jump");
+
+			}
+
+
+			//change directions if 'T' is pressed
+			if (Input.GetKey(KeyCode.T)) {
+				if(turn == 1){
+					turn = -1;
+			} else if(turn == -1){
+					turn = 1;
+				}
+		}
+	}
 
 
         private void FixedUpdate()
         {
             // Read the inputs.
-            bool crouch = Input.GetKey(KeyCode.LeftControl);
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
+        	// bool crouch = Input.GetKey(KeyCode.LeftControl);
+            // float h = CrossPlatformInputManager.GetAxis("Horizontal");
             // Pass all parameters to the character control script.
-            m_Character.Move(h, crouch, m_Jump);
+
+			//player cannot crouch (false) and is always running right (1)
+            m_Character.Move(turn, false, m_Jump);
             m_Jump = false;
         }
     }
