@@ -29,7 +29,7 @@ namespace UnityStandardAssets._2D
 
 
 			//change directions if 'T' is pressed
-			if (Input.GetKey(KeyCode.T)) {
+			if (Input.GetKeyDown(KeyCode.T)) {
 				if(turn == 1){
 					turn = -1;
 			} else if(turn == -1){
